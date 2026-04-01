@@ -28,3 +28,8 @@ bun run src/entrypoints/cli.tsx
 ```
 
 注意：先装依赖、用对入口、确认构建通过，再把 API 配置补齐，这样才能真正进入可对话状态。
+
+
+bun --env-file=.env_bak run dev
+pip install litellm[proxy]
+litellm --config config.yaml --port 4000

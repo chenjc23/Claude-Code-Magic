@@ -1,0 +1,9 @@
+model_list:
+  - model_name: deepseek-chat
+    litellm_params:
+      model: deepseek/deepseek-chat
+      api_key: "sk-6962d9aaff164c359382ae6bac48af33"
+      api_base: "https://api.deepseek.com"
+
+litellm_settings:
+  drop_params: True
