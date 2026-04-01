@@ -1,4 +1,5 @@
 import type { Base64ImageSource } from '@anthropic-ai/sdk/resources/index.mjs'
+import { getAPIProvider } from '../../utils/model/providers.js'
 import { readdir, readFile as readFileAsync } from 'fs/promises'
 import * as path from 'path'
 import { posix, win32 } from 'path'
@@ -652,6 +653,15 @@ export const FileReadTool = buildTool({
   mapToolResultToToolResultBlockParam(data, toolUseID) {
     switch (data.type) {
       case 'image': {
+        // Custom providers (e.g. GLM via OpenRouter) do not support image
+        // content blocks in tool_result. Return a text description instead.
+        if (getAPIProvider() === 'custom') {
+          return {
+            tool_use_id: toolUseID,
+            type: 'tool_result',
+            content: `[Image file: ${data.file.filePath} (${data.file.type}, ${Math.round(data.file.base64.length * 0.75 / 1024)}KB) — image rendering not supported with current model provider]`,
+          }
+        }
         return {
           tool_use_id: toolUseID,
           type: 'tool_result',
