@@ -13,7 +13,17 @@ export class ColorDiff {
   }
 }
 
-export class ColorFile {}
+export class ColorFile {
+  constructor(code, filePath) {
+    this.code = code
+    this.filePath = filePath
+  }
+
+  // Returns string[] of plain (non-highlighted) lines to avoid crashes.
+  render(theme, width, dim) {
+    return this.code.split('\n')
+  }
+}
 
 export function getSyntaxTheme() {
   return {}

@@ -1256,6 +1256,9 @@ export const getClaudeAIOAuthTokens = memoize((): OAuthTokens | null => {
   // --bare: API-key-only. No OAuth env tokens, no keychain, no credentials file.
   if (isBareMode()) return null
 
+  // Skip all OAuth token sources when explicitly disabled (e.g. custom-compiled builds using external API keys)
+  if (isEnvTruthy(process.env.CLAUDE_CODE_DISABLE_OAUTH)) return null
+
   // Check for force-set OAuth token from environment variable
   if (process.env.CLAUDE_CODE_OAUTH_TOKEN) {
     // Return an inference-only token (unknown refresh and expiry)

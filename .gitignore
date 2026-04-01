@@ -4,3 +4,5 @@ dist/
 bun.lock
 bun.lockb
 .DS_Store
+.claude/settings.local.json
+.env_bak

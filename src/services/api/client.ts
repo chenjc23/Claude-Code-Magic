@@ -298,8 +298,9 @@ export async function getAnthropicClient({
 
   // Determine authentication method based on available tokens
   const clientConfig: ConstructorParameters<typeof Anthropic>[0] = {
-    apiKey: 'sk_o2weNVoKbREjJNkRM3rueBTK0-qulMY3Fck7jr-gAwI',
-    baseURL: 'https://api.jiekou.ai/anthropic',
+    apiKey: process.env.ANTHROPIC_API_KEY,
+    // authToken: process.env.ANTHROPIC_AUTH_TOKEN,
+    baseURL: process.env.ANTHROPIC_BASE_URL,
     ...ARGS,
     ...(isDebugToStdErr() && { logger: createStderrLogger() }),
   }

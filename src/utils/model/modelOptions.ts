@@ -341,6 +341,34 @@ function getModelOptionsBase(fastMode = false): ModelOption[] {
     return payg1POptions
   }
 
+  // Custom external API (CLAUDE_CODE_USE_CUSTOM=true): show only env-var-defined models
+  if (getAPIProvider() === 'custom') {
+    const customOptions = [getDefaultOptionForUser(fastMode)]
+
+    const customSonnet = getCustomSonnetOption()
+    if (customSonnet !== undefined) {
+      customOptions.push(customSonnet)
+    } else {
+      customOptions.push(getSonnet46Option())
+    }
+
+    const customOpus = getCustomOpusOption()
+    if (customOpus !== undefined) {
+      customOptions.push(customOpus)
+    } else {
+      customOptions.push(getOpus46Option(fastMode))
+    }
+
+    const customHaiku = getCustomHaikuOption()
+    if (customHaiku !== undefined) {
+      customOptions.push(customHaiku)
+    } else {
+      customOptions.push(getHaikuOption())
+    }
+
+    return customOptions
+  }
+
   // PAYG 3P: Default (Sonnet 4.5) + Sonnet (3P custom) or Sonnet 4.6/1M + Opus (3P custom) or Opus 4.1/Opus 4.6/Opus1M + Haiku + Opus 4.1
   const payg3pOptions = [getDefaultOptionForUser(fastMode)]
 
